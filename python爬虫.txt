@@ -1,0 +1,23 @@
+import requests
+from bs4 import BeautifulSoup
+import re
+x=input("请输入要查询的词:")
+url='https://hanyu.baidu.com/s?wd='+x
+page=requests.get(url)
+soup=BeautifulSoup(page.text,'lxml')
+first_data=soup.select('#basicmean-wrapper > div:nth-child(2) > dl > dd')
+first_data=str(first_data)
+data=re.sub('[a-zA-Z]','',first_data)
+print("该词解释如下")
+data=re.sub('\W*','',data)
+print(data)
+synonym=soup.select('#synonym')
+antonym=soup.select('#antonym')
+synonym=str(synonym)
+antonym=str(antonym)
+synonym=re.sub('[a-zA-Z]','',synonym)
+antonym=re.sub('[a-zA-Z]','',antonym)
+synonym=re.sub('\W*','',synonym)
+antonym=re.sub('\W*','',antonym)
+print(synonym)
+print(antonym)
